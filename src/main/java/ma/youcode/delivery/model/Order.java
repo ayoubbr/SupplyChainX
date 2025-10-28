@@ -3,7 +3,15 @@ package ma.youcode.delivery.model;
 import jakarta.persistence.*;
 import ma.youcode.production.model.Product;
 import ma.youcode.shared.enums.OrderStatus;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "orders")
 public class Order {

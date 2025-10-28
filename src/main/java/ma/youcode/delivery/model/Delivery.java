@@ -5,6 +5,15 @@ import ma.youcode.shared.enums.DeliveryStatus;
 
 import java.time.LocalDate;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "deliveries")
 public class Delivery {

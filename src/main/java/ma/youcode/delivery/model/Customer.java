@@ -1,8 +1,18 @@
 package ma.youcode.delivery.model;
 
 import jakarta.persistence.*;
+
 import java.util.List;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "customers")
 public class Customer {

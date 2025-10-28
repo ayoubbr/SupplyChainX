@@ -1,8 +1,10 @@
 package ma.youcode.shared.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
 import ma.youcode.shared.enums.Role;
 
+@Data
 @Entity
 @Table(name = "users")
 public class User {
@@ -17,7 +19,5 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private Role role;
-
-    // Getters & Setters
 }
 
