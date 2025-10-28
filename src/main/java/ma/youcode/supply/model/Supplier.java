@@ -1,0 +1,24 @@
+package ma.youcode.supply.model;
+
+import jakarta.persistence.*;
+
+import java.util.List;
+
+@Entity
+@Table(name = "suppliers")
+public class Supplier {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String name;
+    private String contact;
+    private double rating;
+    private int leadTime;
+
+    @OneToMany(mappedBy = "supplier")
+    private List<SupplyOrder> supplyOrders;
+
+    // Getters & Setters
+}
+

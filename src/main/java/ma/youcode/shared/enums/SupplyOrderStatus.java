@@ -1,4 +1,4 @@
-package ma.youcode.approvisionnement.enums;
+package ma.youcode.shared.enums;
 
 public enum SupplyOrderStatus {
     EN_ATTENTE,

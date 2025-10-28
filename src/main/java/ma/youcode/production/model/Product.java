@@ -1,0 +1,30 @@
+package ma.youcode.production.model;
+
+import jakarta.persistence.*;
+import ma.youcode.delivery.model.Order;
+
+import java.util.List;
+
+@Entity
+@Table(name = "products")
+public class Product {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String name;
+    private int productionTime;
+    private double cost;
+    private int stock;
+
+    @OneToMany(mappedBy = "product")
+    private List<Order> orders;
+
+    @OneToMany(mappedBy = "product")
+    private List<ProductionOrder> productionOrders;
+
+    @OneToMany(mappedBy = "product")
+    private List<BillOfMaterial> billOfMaterials;
+
+    // Getters & Setters
+}
