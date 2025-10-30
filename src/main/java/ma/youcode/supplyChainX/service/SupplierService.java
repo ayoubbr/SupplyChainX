@@ -19,9 +19,6 @@ public class SupplierService {
     }
 
     public Supplier save(Supplier supplier) {
-//        if (supplierRepository.existsById(supplier.getId())) {
-//            throw new IllegalArgumentException("Supplier with ID " + supplier.getId() + " already exists.");
-//        }
         if (supplierRepository.existsByName(supplier.getName())) {
             throw new IllegalArgumentException("Supplier with name " + supplier.getName() + " already exists.");
         }

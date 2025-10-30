@@ -8,5 +8,7 @@ import java.util.List;
 
 @Repository
 public interface RawMaterialRepository extends JpaRepository<RawMaterial, Long> {
-    List<RawMaterial> findByStockLessThan(int minStock);
+    List<RawMaterial> findByName(String name);
+
+    boolean existsByName(String name);
 }
