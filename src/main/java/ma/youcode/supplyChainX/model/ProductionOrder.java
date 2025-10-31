@@ -31,7 +31,5 @@ public class ProductionOrder {
 
     private LocalDate startDate;
     private LocalDate endDate;
-
-    // Getters & Setters
 }
 

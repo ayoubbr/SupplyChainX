@@ -31,6 +31,6 @@ public class Product {
     @OneToMany(mappedBy = "product")
     private List<ProductionOrder> productionOrders;
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product",  cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BillOfMaterial> billOfMaterials;
 }

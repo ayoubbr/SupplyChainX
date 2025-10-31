@@ -24,6 +24,4 @@ public class BillOfMaterial {
     private RawMaterial rawMaterial;
 
     private int quantity;
-
-    // Getters & Setters
 }

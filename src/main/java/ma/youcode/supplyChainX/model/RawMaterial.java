@@ -9,8 +9,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import ma.youcode.supplyChainX.model.Supplier;
-import ma.youcode.supplyChainX.model.SupplyOrderRawMaterial;
 
 @Getter
 @Setter
@@ -41,6 +39,4 @@ public class RawMaterial {
 
     @OneToMany(mappedBy = "rawMaterial")
     private List<SupplyOrderRawMaterial> supplyOrderRawMaterials;
-
-    // Getters & Setters
 }

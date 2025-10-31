@@ -1,6 +1,8 @@
 package ma.youcode.supplyChainX.controller;
 
 import lombok.Getter;
+import ma.youcode.supplyChainX.dto.ProductRequest;
+import ma.youcode.supplyChainX.dto.ProductResponse;
 import ma.youcode.supplyChainX.model.Product;
 import ma.youcode.supplyChainX.service.ProductService;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +20,8 @@ public class ProductController {
     }
 
     @PostMapping
-    public Product addProduct(@RequestBody Product product) {
-        return productService.save(product);
+    public ProductResponse addProduct(@RequestBody ProductRequest productRequest) {
+        return productService.save(productRequest);
     }
 
     @GetMapping
