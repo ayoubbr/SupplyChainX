@@ -4,11 +4,12 @@ import ma.youcode.supplyChainX.model.RawMaterial;
 import ma.youcode.supplyChainX.repository.RawMaterialRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
-@Repository
+@Transactional
 public class RawMaterialService {
 
     private RawMaterialRepository rawMaterialRepository;
@@ -18,6 +19,9 @@ public class RawMaterialService {
     }
 
     public RawMaterial save(RawMaterial rawMaterial) {
+        if (rawMaterialRepository.existsByName(rawMaterial.getName())) {
+            throw new IllegalArgumentException("Raw material with name " + rawMaterial.getName() + " already exists.");
+        }
         return rawMaterialRepository.save(rawMaterial);
     }
 
