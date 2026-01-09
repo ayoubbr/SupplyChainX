@@ -1,5 +1,11 @@
 package ma.youcode.supplyChainX.service;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import ma.youcode.supplyChainX.dto.SupplierRequest;
+import ma.youcode.supplyChainX.dto.SupplierResponse;
+import ma.youcode.supplyChainX.mapper.SupplierMapper;
 import ma.youcode.supplyChainX.model.Supplier;
 import ma.youcode.supplyChainX.repository.SupplierRepository;
 import org.springframework.stereotype.Service;
@@ -7,53 +13,55 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
+@AllArgsConstructor
 public class SupplierService {
 
     private final SupplierRepository supplierRepository;
+    private final SupplierMapper supplierMapper;
 
-    public SupplierService(SupplierRepository supplierRepository) {
-        this.supplierRepository = supplierRepository;
-    }
 
-    public Supplier save(Supplier supplier) {
-        if (supplierRepository.existsByName(supplier.getName())) {
-            throw new IllegalArgumentException("Supplier with name " + supplier.getName() + " already exists.");
+    public SupplierResponse save(SupplierRequest supplierRequest) {
+        if (supplierRepository.existsByName(supplierRequest.getName())) {
+            throw new IllegalArgumentException("Supplier with name " + supplierRequest.getName() + " already exists.");
         }
-        if (supplierRepository.existsByContact(supplier.getContact())) {
-            throw new IllegalArgumentException("Supplier with contact " + supplier.getContact() + " already exists.");
+        if (supplierRepository.existsByContact(supplierRequest.getContact())) {
+            throw new IllegalArgumentException("Supplier with contact " + supplierRequest.getContact() + " already exists.");
         }
 
-        return supplierRepository.save(supplier);
+        Supplier supplier = supplierMapper.toEntity(supplierRequest);
+
+        return supplierMapper.toResponse(supplierRepository.save(supplier));
     }
 
-    public Supplier update(Supplier supplier, Long id) {
+    public SupplierResponse update(SupplierRequest supplierRequest, Long id) {
 
-        Supplier existingSupplier = supplierRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Supplier with ID " + id + " not found."));
+        Supplier existingSupplier = supplierRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Supplier with ID " + id + " not found."));
 
-        if (supplierRepository.existsByName(supplier.getName())) {
-            Supplier supplierByName = supplierRepository.findByName(supplier.getName());
+        if (supplierRepository.existsByName(supplierRequest.getName())) {
+            Supplier supplierByName = supplierRepository.findByName(supplierRequest.getName());
             if (!Objects.equals(supplierByName.getId(), existingSupplier.getId())) {
-                throw new IllegalArgumentException("Supplier with name " + supplier.getName() + " already exists.");
+                throw new IllegalArgumentException("Supplier with name " + supplierRequest.getName() + " already exists.");
             }
         }
 
-        existingSupplier.setName(supplier.getName());
-        existingSupplier.setContact(supplier.getContact());
-        existingSupplier.setRating(supplier.getRating());
-        existingSupplier.setLeadTime(supplier.getLeadTime());
+        existingSupplier.setName(supplierRequest.getName());
+        existingSupplier.setContact(supplierRequest.getContact());
+        existingSupplier.setRating(supplierRequest.getRating());
+        existingSupplier.setLeadTime(supplierRequest.getLeadTime());
 
-        return supplierRepository.save(existingSupplier);
+        return supplierMapper.toResponse(supplierRepository.save(existingSupplier));
     }
 
-    public List<Supplier> findAll() {
-        return supplierRepository.findAll();
+    public List<SupplierResponse> findAll() {
+        List<Supplier> suppliers = supplierRepository.findAll();
+        return suppliers.stream().map(supplierMapper::toResponse).collect(Collectors.toList());
     }
 
-    public Supplier deleteById(Long id) {
+    public SupplierResponse deleteById(Long id) {
         Supplier supplier = supplierRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Supplier with ID " + id + " not found."));
 
@@ -62,18 +70,21 @@ public class SupplierService {
         }
 
         supplierRepository.deleteById(id);
-        return supplier;
+        return supplierMapper.toResponse(supplier);
     }
 
-    public Supplier findById(Long id) {
-        return supplierRepository.findById(id)
+    public SupplierResponse findById(Long id) {
+        Supplier supplier = supplierRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Supplier with ID " + id + " not found."));
+
+        return supplierMapper.toResponse(supplier);
     }
 
-    public Supplier findByName(String name) {
+    public SupplierResponse findByName(String name) {
         if (!supplierRepository.existsByName(name)) {
             throw new IllegalArgumentException("Supplier with name " + name + " does not exist.");
         }
-        return supplierRepository.findByName(name);
+        Supplier byName = supplierRepository.findByName(name);
+        return supplierMapper.toResponse(byName);
     }
 }

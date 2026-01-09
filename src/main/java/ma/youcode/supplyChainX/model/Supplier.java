@@ -28,7 +28,5 @@ public class Supplier {
 
     @OneToMany(mappedBy = "supplier")
     private List<SupplyOrder> supplyOrders;
-
-    // Getters & Setters
 }
 

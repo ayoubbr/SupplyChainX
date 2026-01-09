@@ -26,7 +26,7 @@ public class RawMaterial {
     private int stockMin;
     private String unit;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "rawmaterial_supplier",
             joinColumns = @JoinColumn(name = "rawmaterial_id"),
@@ -34,9 +34,9 @@ public class RawMaterial {
     )
     private List<Supplier> suppliers;
 
-    @OneToMany(mappedBy = "rawMaterial")
+    @OneToMany(mappedBy = "rawMaterial", fetch = FetchType.LAZY)
     private List<BillOfMaterial> billOfMaterials;
 
-    @OneToMany(mappedBy = "rawMaterial")
+    @OneToMany(mappedBy = "rawMaterial", fetch = FetchType.LAZY)
     private List<SupplyOrderRawMaterial> supplyOrderRawMaterials;
 }

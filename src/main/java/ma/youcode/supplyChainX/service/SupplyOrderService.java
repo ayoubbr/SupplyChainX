@@ -111,20 +111,18 @@ public class SupplyOrderService {
         return 0;
     }
 
-    public SupplyOrder update(SupplyOrderRequest supplyOrder, Long id) {
+    public SupplyOrder update(Long id) {
         SupplyOrder existingOrder = supplyOrderRepository.findById(id).orElseThrow(() ->
                 new IllegalArgumentException("Supply order with the given ID does not exist."));
 
-        existingOrder.setDate(supplyOrder.getOrderDate());
-        existingOrder.setStatus(SupplyOrderStatus.valueOf(supplyOrder.getStatus()));
+        existingOrder.setStatus(SupplyOrderStatus.RECUE);
 
-        if (SupplyOrderStatus.valueOf(supplyOrder.getStatus()) == SupplyOrderStatus.RECUE) {
-            for (SupplyOrderRawMaterial supplyOrderRawMaterial : existingOrder.getSupplyOrderRawMaterials()) {
-                RawMaterial rawMaterial = supplyOrderRawMaterial.getRawMaterial();
-                rawMaterial.setStock(rawMaterial.getStock() + supplyOrderRawMaterial.getQuantity());
-                rawMaterialRepository.save(rawMaterial);
-            }
+        for (SupplyOrderRawMaterial supplyOrderRawMaterial : existingOrder.getSupplyOrderRawMaterials()) {
+            RawMaterial rawMaterial = supplyOrderRawMaterial.getRawMaterial();
+            rawMaterial.setStock(rawMaterial.getStock() + supplyOrderRawMaterial.getQuantity());
+            rawMaterialRepository.save(rawMaterial);
         }
+
 
         supplyOrderRepository.save(existingOrder);
         return existingOrder;

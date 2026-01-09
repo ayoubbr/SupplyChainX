@@ -48,8 +48,8 @@ public class SupplyOrderController {
     }
 
     @PutMapping("/{id}")
-    public SupplyOrderResponse update(@PathVariable Long id, @RequestBody SupplyOrderRequest supplyOrderRequest) {
-        SupplyOrder updatedOrder = supplyOrderService.update(supplyOrderRequest, id);
+    public SupplyOrderResponse update(@PathVariable Long id) {
+        SupplyOrder updatedOrder = supplyOrderService.update(id);
         return supplyOrderService.toResponse(updatedOrder);
     }
 

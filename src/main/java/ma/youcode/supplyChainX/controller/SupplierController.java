@@ -1,6 +1,8 @@
 package ma.youcode.supplyChainX.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import ma.youcode.supplyChainX.dto.SupplierRequest;
+import ma.youcode.supplyChainX.dto.SupplierResponse;
 import ma.youcode.supplyChainX.model.Supplier;
 import ma.youcode.supplyChainX.service.SupplierService;
 import org.springframework.http.ResponseEntity;
@@ -20,32 +22,32 @@ public class SupplierController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Supplier> getSupplierById(@PathVariable Long id) {
+    public ResponseEntity<SupplierResponse> getSupplierById(@PathVariable Long id) {
         return  ResponseEntity.ok(supplierService.findById(id));
     }
 
     @GetMapping()
-    public List<Supplier> getAllSuppliers() {
+    public List<SupplierResponse> getAllSuppliers() {
         return supplierService.findAll();
     }
 
     @GetMapping("/name/{name}")
-    public Supplier getByName(@PathVariable String name) {
+    public SupplierResponse getByName(@PathVariable String name) {
         return supplierService.findByName(name);
     }
 
     @PostMapping()
-    public Supplier createSupplier(@RequestBody Supplier supplier) {
+    public SupplierResponse createSupplier(@RequestBody SupplierRequest supplier) {
         return supplierService.save(supplier);
     }
 
     @PutMapping("/{id}")
-    public Supplier updateSupplier(@RequestBody Supplier supplier, @PathVariable Long id) {
+    public SupplierResponse updateSupplier(@RequestBody SupplierRequest supplier, @PathVariable Long id) {
         return supplierService.update(supplier, id);
     }
 
     @DeleteMapping("/{id}")
-    public Supplier deleteSupplier(@PathVariable Long id) {
+    public SupplierResponse deleteSupplier(@PathVariable Long id) {
         return supplierService.deleteById(id);
     }
 }
